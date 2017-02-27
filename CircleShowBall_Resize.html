@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html>
+	<head>
+		<meta charset="utf-8" /> 
+		<title> CircleShowBall - Mini </title>
+        <style type="text/css">
+        body, html { overflow:hidden; }
+        .circlex { position:absolute; left:50%; top:50%; width:10px; height:10px; border-radius:100%; opacity:1; background-color:#ffffcc; }
+        </style>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script type="text/javascript">
+        var Worker = 0;
+
+        function CircleShowBallItem() {
+            var divideNo = Math.ceil((Math.random() * 2));
+            var baseWidth = ($(window).width() / divideNo);
+            var baseHeight = ($(window).height() / divideNo);
+            var left = Math.floor((Math.random() * baseWidth));
+            var top = Math.floor((Math.random() * baseHeight));
+            var size = Math.floor((Math.random() * baseWidth));
+
+            $('<div />')
+            .addClass('circlex')
+            .appendTo('BODY')
+            .animate(
+                {
+                    left : left,
+                    top : top,
+                    width : size,
+                    height : size,
+                    opacity : 0
+                },
+                3000,
+                function() {
+                    $(this).remove();
+                }
+            );  
+
+            Worker = setTimeout(CircleShowBallItem, (1000 / 60));      
+        }
+
+        function CircleShowBall(isStart) {
+            if(isStart == true) {
+                CircleShowBallItem();
+            } else {
+                if(Worker != 0) {
+                    clearTimeout(Worker);
+                    Worker = 0;
+                }
+            }
+        }
+        </script>
+	</head>
+	<body>
+        <input type="button" value="CircleShowBall - Mini - Start" onclick="CircleShowBall(true);" />
+        <input type="button" value="CircleShowBall - Mini - Stop" onclick="CircleShowBall(false);" />
+	</body>
+</html>
